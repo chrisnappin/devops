@@ -15,7 +15,7 @@ cookbook_file "/etc/apache2/sites-available/000-default.conf" do
   notifies :restart, "service[apache2]", :delayed
 end
 
-# configure the init server, and start it up
+# configure the init.d service, and start it up
 service "apache2" do
   supports :status => true, :restart => true, :reload => true
   action [ :enable, :start ]
