@@ -14,6 +14,7 @@ class web_example {
       enable => true,
   }
   
+  # set the home page
   file { 'c:/inetpub/wwwroot/Default.htm':
       ensure => 'file',
       owner  => 'Administrator',
