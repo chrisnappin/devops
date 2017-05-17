@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=Terminal
+Comment=Terminal
+Exec="/usr/bin/gnome-shell &"
+Icon=/usr/share/icons/Adwaita/64x64/apps/utilities-terminal-symbolic.symbolic.png
+Terminal=false

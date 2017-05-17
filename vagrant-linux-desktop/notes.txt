@@ -1,0 +1,59 @@
+notes
+=====
+- installed VirtualBox 5.1.22 locally
+- installed VirtualBox extensions pack 5.1.22 locally
+- installed Vagrant 1.9.4
+
+vagrant box list
+vagrant box add <name>
+vagrant box update
+vagrant box prune (removes out of date boxes)
+vagrant box remove <name>
+vagrant up
+vagrant provision
+
+https://docs.fedoraproject.org/en-US/Fedora/25/html/System_Administrators_Guide/index.html
+
+Vagrant base box includes VBox Guest Additions 5.1.20
+- does not include Chef/Puppet/Ansible or ruby
+cached in .vagrant
+
+login is: vagrant/vagrant
+To uncapture mouse: right control key
+
+- manually run "sudo yum update"
+- manually edited shared folder C:\\chris\\dev\\vagrant-vm => /vagrant
+
+shared folder error:
+(mount fails, dmesg is "sf_read_super_aux err=-22") 
+  - cause is broken symbolic link in 5.1.20 (VBoxExtensions installed in VM) fixed in v5.1.22
+  - fix is: ln -s /opt/VBoxGuestAdditions-5.1.20/lib/VBoxGuestAdditions/mount.vboxsf /sbin/mount.vboxsf
+  (note that /usr/lib64/VBoxGuestAdditions -> /opt/VBoxGuestAdditions-5.1.20/lib/VBoxGuestAdditions)
+  - have to fix for the shell provisioner to run!
+  
+run to force the provision step: vagrant up --provision
+
+- had to run as root (not just prefix with sudo)
+  curl -L https://www.opscode.com/chef/install.sh | bash
+(installed \bin\chef-client version 13.0.118)  
+  
+- note: tried installing jekyll as gem package but that requires:
+  (ruby, ruby-devel, "C Development Tools and Libraries" dnf group, but then still failed)
+  - Ruby gems packaged as RPMs (so don't need build tools) - see http://isitfedoraruby.com/
+  
+- note: save all chef cookbook files with Unix line-endings!
+  
+- manually installed Intellij community edition
+  - downloaded Linux no-jdk (.tar.gz)
+  - extract to ~
+  - run bin/idea.sh (to install and to setup)
+  
+- for setting up .desktop files, see /usr/share/applications for examples
+  (files have .desktop suffix, and need to be executable)
+- installed Tweak Tool, set desktop icons on, reduced window fonts from 11 to 10 points
+
+- AWS
+  - already had Python 2.7.13
+  - ran: pip install --upgrade --user awscli  
+  (installs to ~/.local/bin)
+  

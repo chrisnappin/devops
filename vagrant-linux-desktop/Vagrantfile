@@ -1,0 +1,48 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # The base box to use
+  config.vm.box = "jhcook/fedora25"
+
+  # forwarded port mappings (host to guest)
+  config.vm.network "forwarded_port", guest: 4000, host: 4000, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 9000, host: 9000, host_ip: "127.0.0.1"
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  # config.vm.network "private_network", ip: "192.168.33.10"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # Shared folders
+  config.vm.synced_folder "C:\\chris\\dev\\fedora-vm", "/vagrant"
+
+  config.vm.provider "virtualbox" do |vb|
+    # don't boot the machine into headless mode
+    vb.gui = true
+  
+    # customize the VM resources
+    vb.memory = 4096
+	vb.cpus = 4
+  end
+
+  # refresh packages before installing (as base box might be out of date)
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo yum update -y
+  SHELL
+  
+  # run chef solo provisioner
+  config.vm.provision "chef_solo" do |chef|
+	chef.add_recipe "jekyll"
+	chef.add_recipe "sdkman"
+	chef.cookbooks_path = "provision/cookbooks"
+  end
+end

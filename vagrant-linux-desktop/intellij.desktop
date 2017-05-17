@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Intellij
+Comment=Intellij
+Exec=/home/vagrant/idea-IC-171.4424.56/bin/idea.sh
+Icon=/home/vagrant/idea-IC-171.4424.56/bin/idea.png
+Terminal=false
+Type=Application
